@@ -14,7 +14,7 @@ RUN tar -zxvf helm-v2.5.0-linux-amd64.tar.gz
 RUN mv linux-amd64/helm /usr/local/bin 
 RUN pip install --upgrade pip
 RUN pip install awscli --upgrade --user
-
+RUN mv /root/.local/bin/* /usr/local/bin/
 
 
 
