@@ -13,8 +13,10 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v2.5.0-linux-am
 RUN tar -zxvf helm-v2.5.0-linux-amd64.tar.gz 
 RUN mv linux-amd64/helm /usr/local/bin 
 RUN pip install --upgrade pip
-RUN pip install awscli --upgrade --user
-RUN mv /root/.local/bin/* /usr/local/bin/
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+RUN unzip awscli-bundle.zip
+RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+RUN rm -f awscli-bundle.zip && rm -rf ./awscli-bundle
 
 
 
