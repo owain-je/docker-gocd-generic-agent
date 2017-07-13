@@ -19,7 +19,8 @@ RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 RUN rm -f awscli-bundle.zip && rm -rf ./awscli-bundle
 RUN curl -LO https://packages.chef.io/files/stable/chef/12.21.3/ubuntu/16.04/chef_12.21.3-1_amd64.deb
 RUN dpkg -i ./chef_12.21.3-1_amd64.deb
-RUN echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ yakkety main" > /etc/apt/sources.list.d/dotnetdev.list
+RUN echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ xenial main" > /etc/apt/sources.list.d/dotnetdev.list
+
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
 RUN apt-get update
-RUN apt-get install dotnet-dev-1.0.4
+RUN apt-get install -y dotnet-dev-1.0.4
