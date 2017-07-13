@@ -17,9 +17,6 @@ RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.
 RUN unzip awscli-bundle.zip
 RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 RUN rm -f awscli-bundle.zip && rm -rf ./awscli-bundle
+RUN curl -LO https://packages.chef.io/files/stable/chef/12.21.3/ubuntu/16.04/chef_12.21.3-1_amd64.deb
+RUN dpkg -i ./chef_12.21.3-1_amd64.deb
 
-
-
-
-
-#apt-get update -y && apt-get install -y git vim ruby curl apt-transport-https lsb-release software-properties-common python-software-properties && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -  && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && apt-get update -y && apt-get install -y docker-ce && usermod -aG docker go && curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/ && curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v2.5.0-linux-amd64.tar.gz && tar -zxvf helm-v2.5.0-linux-amd64.tar.gz && mv linux-amd64/helm /usr/local/bin 
