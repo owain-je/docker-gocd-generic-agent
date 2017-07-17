@@ -22,14 +22,14 @@ RUN dpkg -i ./chef_12.21.3-1_amd64.deb
 RUN echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ xenial main" > /etc/apt/sources.list.d/dotnetdev.list
 
 
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && / 
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc && / 
-    echo 'eval "$(rbenv init -)"' >> ~/.bashrc && /
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && \ 
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc && \ 
+    echo 'eval "$(rbenv init -)"' >> ~/.bashrc && \
 	exec $SHELL
-RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && /
-	echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc && /
-	exec $SHELL && /
-	rbenv install 2.3.1 && /
+RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+	echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc && \
+	exec $SHELL && \
+	rbenv install 2.3.1 && \
 	rbenv global 2.3.1
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
