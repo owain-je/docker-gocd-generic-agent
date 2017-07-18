@@ -48,4 +48,4 @@ RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /home/go/.bashrc
 RUN echo 'export PATH=/usr/local/rbenv/bin:$PATH' >> /home/go/.bashrc 
 RUN echo 'eval "$(rbenv init -)"' >> /home/go/.bashrc && chown go:go /home/go/.bashrc 
 
-RUN eval "$(rbenv init -)"; gem install awscli
+RUN eval "$(rbenv init -)"; gem install awscli git
