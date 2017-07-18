@@ -19,19 +19,33 @@ RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 RUN rm -f awscli-bundle.zip && rm -rf ./awscli-bundle
 RUN curl -LO https://packages.chef.io/files/stable/chef/12.21.3/ubuntu/16.04/chef_12.21.3-1_amd64.deb
 RUN dpkg -i ./chef_12.21.3-1_amd64.deb
+
 RUN echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ xenial main" > /etc/apt/sources.list.d/dotnetdev.list
-
-
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && \ 
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc && \ 
-    echo 'eval "$(rbenv init -)"' >> ~/.bashrc && \
-	exec $SHELL
-RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
-	echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc && \
-	exec $SHELL && \
-	rbenv install 2.3.1 && \
-	rbenv global 2.3.1
-
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
 RUN apt-get update
 RUN apt-get install -y dotnet-dev-1.0.4
+
+# Ruby crazy 
+RUN git clone https://github.com/rbenv/rbenv.git /usr/local/rbenv 
+RUN git clone https://github.com/rbenv/ruby-build.git /usr/local/rbenv/plugins/ruby-build 
+RUN git clone https://github.com/jf/rbenv-gemset.git /usr/local/rbenv/plugins/rbenv-gemset 
+RUN /usr/local/rbenv/plugins/ruby-build/install.sh
+ENV PATH /usr/local/rbenv/bin:$PATH
+ENV RBENV_ROOT /usr/local/rbenv
+RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh 
+RUN  echo 'export PATH=/usr/local/rbenv/bin:$PATH' >> /etc/profile.d/rbenv.sh 
+RUN  echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /root/.bashrc 
+RUN echo 'export PATH=/usr/local/rbenv/bin:$PATH' >> /root/.bashrc 
+RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
+ENV CONFIGURE_OPTS --disable-install-doc
+ENV PATH /usr/local/rbenv/bin:/usr/local/rbenv/shims:$PATH
+RUN eval "$(rbenv init -)"; rbenv install 2.4.1 
+RUN eval "$(rbenv init -)"; rbenv global 2.4.1 
+RUN eval "$(rbenv init -)"; gem update --system 
+RUN eval "$(rbenv init -)"; gem install bundler
+RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /home/go/.bashrc 
+RUN echo 'export PATH=/usr/local/rbenv/bin:$PATH' >> /home/go/.bashrc 
+RUN echo 'eval "$(rbenv init -)"' >> /home/go/.bashrc && chown go:go /home/go/.bashrc 
+
+RUN eval "$(rbenv init -)"; gem install awscli
